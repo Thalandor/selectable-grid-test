@@ -3,7 +3,15 @@ import Grid from './components/board/Board';
 
 function App() {
   return (
-    <div><Grid /></div>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}
+    >
+      <Grid />
+    </div>
   );
 }
 

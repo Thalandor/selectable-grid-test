@@ -1,5 +1,7 @@
+import styles from './Square.module.scss';
+
 const Square = () => {
-    return <div>square</div>
-}
+  return <div className={styles.square} />;
+};
 
 export default Square;
