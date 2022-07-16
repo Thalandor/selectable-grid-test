@@ -1,5 +1,5 @@
 import './App.css';
-import Grid from './components/board/Board';
+import Board from './components/board/Board';
 
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
         alignItems: 'center'
       }}
     >
-      <Grid />
+      <Board />
     </div>
   );
 }

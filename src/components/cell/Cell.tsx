@@ -7,6 +7,7 @@ const Cell = () => {
     <div
       className={`${styles.cell} ${selected && styles.selected}`}
       onClick={() => setSelected(!selected)}
+      onDoubleClick={() => console.log('double click!!!')}
     />
   );
 };
