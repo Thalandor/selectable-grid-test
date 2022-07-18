@@ -49,7 +49,6 @@ interface ICellBodyProps {
 
 const CellBody: React.FC<ICellBodyProps> = memo(
   ({ color, onClickHandler }: ICellBodyProps) => {
-    console.log('memo');
     return (
       <div
         className={`${styles.cell} ${
