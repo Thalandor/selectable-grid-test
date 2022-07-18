@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
 import { Colors } from '../../context/CellProvider';
 import { useCellContext } from '../../hooks/useCellContext';
 import { useDoubleClick } from '../../hooks/useDoubleClick';
@@ -15,31 +15,50 @@ const Cell: React.FC<IProps> = ({ column }) => {
   // CUSTOM HOOKS
   const { updateColumn, setUpdateColumn, updateColor, setUpdateColor } =
     useCellContext();
-  const onClickHandler = useDoubleClick({
-    onClickHandler: () =>
+
+  const clickCallback = useCallback(
+    () =>
       setColor((prevColor) =>
         prevColor === Colors.UNSELECTED ? Colors.SELECTED : Colors.UNSELECTED
       ),
-    onDoubleClickHandler: () => {
-      setUpdateColor(color);
-      setUpdateColumn(column);
-    }
+    []
+  );
+  const doubleClickCallback = useCallback(() => {
+    setUpdateColor(color);
+    setUpdateColumn(column);
+  }, [color, column, setUpdateColumn, setUpdateColor]);
+  const onClickHandler = useDoubleClick({
+    onClickHandler: clickCallback,
+    onDoubleClickHandler: doubleClickCallback
   });
 
+  // EFFECTS
   useEffect(() => {
     if (column === updateColumn) {
       setColor(updateColor);
     }
   }, [updateColor, updateColumn, column]);
 
-  return (
-    <div
-      className={`${styles.cell} ${
-        color === Colors.SELECTED && styles.selected
-      }`}
-      onClick={onClickHandler}
-    />
-  );
+  return <CellBody color={color} onClickHandler={onClickHandler} />;
 };
+
+interface ICellBodyProps {
+  color: Colors;
+  onClickHandler: (event: any) => void;
+}
+
+const CellBody: React.FC<ICellBodyProps> = memo(
+  ({ color, onClickHandler }: ICellBodyProps) => {
+    console.log('memo');
+    return (
+      <div
+        className={`${styles.cell} ${
+          color === Colors.SELECTED && styles.selected
+        }`}
+        onClick={onClickHandler}
+      />
+    );
+  }
+);
 
 export default Cell;
