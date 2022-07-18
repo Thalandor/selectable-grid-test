@@ -1,7 +1,7 @@
 import CellProvider from '../../context/CellProvider';
 import Cell from '../cell/Cell';
 
-const Grid = () => {
+const Board = () => {
   const rows: JSX.Element[] = [];
   const columns: JSX.Element[] = [];
 
@@ -18,4 +18,4 @@ const Grid = () => {
   );
 };
 
-export default Grid;
+export default Board;
