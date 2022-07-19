@@ -2,7 +2,7 @@ import { memo } from 'react';
 import { Colors } from '../../constants/enums';
 import styles from './CellBody.module.scss';
 
-interface ICellBodyProps {
+interface IProps {
   color: Colors;
   onClickHandler: any;
   onMouseDownHandler: any;
@@ -11,7 +11,7 @@ interface ICellBodyProps {
   onMouseLeaveHandler: any;
 }
 
-const CellBody: React.FC<ICellBodyProps> = memo(
+const CellBody: React.FC<IProps> = memo(
   ({
     color,
     onClickHandler,
@@ -19,7 +19,7 @@ const CellBody: React.FC<ICellBodyProps> = memo(
     onMouseEnterHandler,
     onMouseLeaveHandler,
     onMouseUpHandler
-  }: ICellBodyProps) => {
+  }: IProps) => {
     return (
       <div
         className={`${styles.cell} ${

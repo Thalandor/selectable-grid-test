@@ -1,25 +1,25 @@
 import { useCallback, useRef } from 'react';
 
 interface IProps {
-  onClickHandler: (e: any) => void;
-  onDoubleClickHandler: (e: any) => void;
+  onClickHandler: (e: React.UIEvent<HTMLElement>) => void;
+  onDoubleClickHandler: (e: React.UIEvent<HTMLElement>) => void;
 }
 
 export const useDoubleClick = ({
   onClickHandler,
   onDoubleClickHandler
 }: IProps) => {
-  const clickTimeout = useRef<any>();
+  const clickTimeout = useRef<number | null>(null);
 
   const clearClickTimeout = () => {
     if (clickTimeout) {
-      clearTimeout(clickTimeout.current);
+      clearTimeout(clickTimeout.current || undefined);
       clickTimeout.current = null;
     }
   };
 
   return useCallback(
-    (event: any) => {
+    (event: React.UIEvent<HTMLElement>) => {
       clearClickTimeout();
       if (onClickHandler && event.detail === 1) {
         clickTimeout.current = window.setTimeout(() => {

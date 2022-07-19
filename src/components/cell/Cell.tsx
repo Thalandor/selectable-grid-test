@@ -1,4 +1,4 @@
-import { useCell } from '../../hooks/useCell';
+import { useCell } from './hooks/useCell';
 import CellBody from './CellBody';
 
 interface IProps {
@@ -14,6 +14,7 @@ const Cell: React.FC<IProps> = ({ index }) => {
     onMouseLeaveHandler,
     onMouseUpHandler
   } = useCell(index);
+
   return (
     <CellBody
       color={color}

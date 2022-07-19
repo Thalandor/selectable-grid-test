@@ -28,6 +28,7 @@ const CellProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [updateColumn, setUpdateColumn] = useState<number>(-1);
   const [updateColor, setUpdateColor] = useState<Colors>(Colors.UNSELECTED);
   const [action, setAction] = useState<Actions>(Actions.NONE);
+
   return (
     <CellContext.Provider
       value={{

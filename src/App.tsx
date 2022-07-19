@@ -1,16 +1,10 @@
-import './App.css';
+import styles from './App.module.scss';
 import Board from './components/board/Board';
 import BoardProvider from './context/BoardProvider';
 
 function App() {
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}
-    >
+    <div className={styles.app}>
       <BoardProvider>
         <Board />
       </BoardProvider>

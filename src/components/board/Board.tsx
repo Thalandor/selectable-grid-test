@@ -4,9 +4,11 @@ import Cell from '../cell/Cell';
 const Board = () => {
   const elements =
     Number(process.env.REACT_APP_HEIGHT) * Number(process.env.REACT_APP_WIDTH);
+
   const cells = [...Array(elements)].map((_, i) => (
     <Cell key={`cell_${i}`} index={i} />
   ));
+
   return (
     <CellProvider>
       <div

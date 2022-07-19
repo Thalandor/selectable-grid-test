@@ -1,16 +1,18 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Colors, Actions } from '../constants/enums';
-import { useBoardContext } from './useBoardContext';
-import { useCellContext } from './useCellContext';
-import { useDoubleClick } from './useDoubleClick';
+import { Colors, Actions } from '../../../constants/enums';
+import { useBoardContext } from '../../../hooks/useBoardContext';
+import { useCellContext } from '../../../hooks/useCellContext';
+import { useDoubleClick } from '../../../hooks/useDoubleClick';
 
 export const useCell = (index: number) => {
-  const timerRef = useRef<number>();
   // STATE
   const [color, setColor] = useState(Colors.UNSELECTED);
+
+  // REF
+  const timerRef = useRef<number>();
   const columnRef = useRef<number>(index % Number(process.env.REACT_APP_WIDTH));
 
-  // CUSTOM HOOKS
+  // CONTEXT
   const {
     updateColumn,
     setUpdateColumn,
@@ -19,9 +21,9 @@ export const useCell = (index: number) => {
     action,
     setAction
   } = useCellContext();
-
   const { updateData } = useBoardContext();
 
+  // CALLBACK - EVENTS
   const clickCallback = useCallback(async () => {
     setColor((prevColor) =>
       prevColor === Colors.UNSELECTED ? Colors.SELECTED : Colors.UNSELECTED
@@ -34,26 +36,6 @@ export const useCell = (index: number) => {
     setUpdateColumn(columnRef.current);
     setAction(Actions.DOUBLE_CLICK);
   }, [color, setUpdateColumn, setUpdateColor, setAction]);
-
-  const onClickHandler = useDoubleClick({
-    onClickHandler: clickCallback,
-    onDoubleClickHandler: doubleClickCallback
-  });
-
-  useEffect(() => {
-    if (columnRef.current === updateColumn && action === Actions.DOUBLE_CLICK) {
-      setColor(updateColor);
-    } else if (
-      action === Actions.LONG_PRESS_RELEASED &&
-      color === Colors.HOVERED
-    ) {
-      setColor(updateColor);
-    }
-  }, [updateColor, updateColumn, action, color]);
-
-  useEffect(() => {
-    updateData(index, color);
-  }, [updateData, color, index]);
 
   const onMouseEnterHandler = useCallback(() => {
     if (action === Actions.LONG_PRESS) {
@@ -78,6 +60,28 @@ export const useCell = (index: number) => {
   const onMouseLeaveHandler = useCallback(() => {
     clearTimeout(timerRef.current);
   }, []);
+
+  // EFFECTS
+  useEffect(() => {
+    if (columnRef.current === updateColumn && action === Actions.DOUBLE_CLICK) {
+      setColor(updateColor);
+    } else if (
+      action === Actions.LONG_PRESS_RELEASED &&
+      color === Colors.HOVERED
+    ) {
+      setColor(updateColor);
+    }
+  }, [updateColor, updateColumn, action, color]);
+
+  useEffect(() => {
+    updateData(index, color);
+  }, [updateData, color, index]);
+
+  // CUSTOM HOOKS
+  const onClickHandler = useDoubleClick({
+    onClickHandler: clickCallback,
+    onDoubleClickHandler: doubleClickCallback
+  });
 
   return {
     color,

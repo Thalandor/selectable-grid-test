@@ -24,16 +24,20 @@ export const BoardContext = createContext<IBoardContext>({
 const BoardProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const elements =
     Number(process.env.REACT_APP_HEIGHT) * Number(process.env.REACT_APP_WIDTH);
+
   const [data, setData] = useState<ICellData[]>(
     [...Array(elements)].map<ICellData>((_, i) => {
       return { color: Colors.UNSELECTED };
     })
   );
+
   const { sendData } = useRequestBin();
   const debouncedSendData = useDebounce(sendData);
+
   useEffect(() => {
     debouncedSendData(data);
   }, [data, debouncedSendData]);
+
   const updateData = useCallback((index: number, color: Colors) => {
     setData((previousData) => [
       ...previousData.slice(0, index),
@@ -44,6 +48,7 @@ const BoardProvider: React.FC<PropsWithChildren> = ({ children }) => {
       ...previousData.slice(index + 1)
     ]);
   }, []);
+
   return (
     <BoardContext.Provider
       value={{
