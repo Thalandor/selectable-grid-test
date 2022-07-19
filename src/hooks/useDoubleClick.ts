@@ -22,7 +22,7 @@ export const useDoubleClick = ({
     (event: any) => {
       clearClickTimeout();
       if (onClickHandler && event.detail === 1) {
-        clickTimeout.current = setTimeout(() => {
+        clickTimeout.current = window.setTimeout(() => {
           onClickHandler(event);
         }, 200);
       }
