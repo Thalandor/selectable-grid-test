@@ -1,5 +1,6 @@
 import './App.css';
 import Board from './components/board/Board';
+import BoardProvider from './context/BoardProvider';
 
 function App() {
   return (
@@ -10,7 +11,9 @@ function App() {
         alignItems: 'center'
       }}
     >
-      <Board />
+      <BoardProvider>
+        <Board />
+      </BoardProvider>
     </div>
   );
 }

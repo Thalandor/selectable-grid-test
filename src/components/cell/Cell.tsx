@@ -1,22 +1,21 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Actions, Colors } from '../../context/CellProvider';
+import { useBoardContext } from '../../hooks/useBoardContext';
 import { useCellContext } from '../../hooks/useCellContext';
 import { useDoubleClick } from '../../hooks/useDoubleClick';
-import useRequestBin from '../../hooks/useRequestBin';
 import CellBody from './CellBody';
 
 interface IProps {
-  column: number;
+  index: number;
 }
 
-const Cell: React.FC<IProps> = ({ column }) => {
+const Cell: React.FC<IProps> = ({ index }) => {
   const timerRef = useRef<number>();
   // STATE
   const [color, setColor] = useState(Colors.UNSELECTED);
+  const columnRef = useRef<number>(index % Number(process.env.REACT_APP_WIDTH));
 
   // CUSTOM HOOKS
-  const { request } = useRequestBin();
-
   const {
     updateColumn,
     setUpdateColumn,
@@ -26,20 +25,20 @@ const Cell: React.FC<IProps> = ({ column }) => {
     setAction
   } = useCellContext();
 
+  const { updateData } = useBoardContext();
+
   const clickCallback = useCallback(async () => {
-    await request({ jaja: 'lole' });
     setColor((prevColor) =>
       prevColor === Colors.UNSELECTED ? Colors.SELECTED : Colors.UNSELECTED
     );
     setAction(Actions.NONE);
-  }, [setAction, request]);
+  }, [setAction]);
 
   const doubleClickCallback = useCallback(async () => {
-    await request({ double: 'click' });
     setUpdateColor(color);
-    setUpdateColumn(column);
+    setUpdateColumn(columnRef.current);
     setAction(Actions.DOUBLE_CLICK);
-  }, [color, column, setUpdateColumn, setUpdateColor, setAction, request]);
+  }, [color, setUpdateColumn, setUpdateColor, setAction]);
 
   const onClickHandler = useDoubleClick({
     onClickHandler: clickCallback,
@@ -47,7 +46,7 @@ const Cell: React.FC<IProps> = ({ column }) => {
   });
 
   useEffect(() => {
-    if (column === updateColumn && action === Actions.DOUBLE_CLICK) {
+    if (columnRef.current === updateColumn && action === Actions.DOUBLE_CLICK) {
       setColor(updateColor);
     } else if (
       action === Actions.LONG_PRESS_RELEASED &&
@@ -55,7 +54,11 @@ const Cell: React.FC<IProps> = ({ column }) => {
     ) {
       setColor(updateColor);
     }
-  }, [updateColor, updateColumn, column, action, color]);
+  }, [updateColor, updateColumn, action, color]);
+
+  useEffect(() => {
+    updateData(index, color);
+  }, [updateData, color, index]);
 
   const onMouseEnterHandler = () => {
     if (action === Actions.LONG_PRESS) {
@@ -80,7 +83,6 @@ const Cell: React.FC<IProps> = ({ column }) => {
   const onMouseLeaveHandler = () => {
     clearTimeout(timerRef.current);
   };
-
   return (
     <div
       onClick={onClickHandler}

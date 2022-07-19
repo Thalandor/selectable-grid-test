@@ -3,12 +3,7 @@ import { Colors } from '../context/CellProvider';
 import { useCellContext } from './useCellContext';
 import { useDoubleClick } from './useDoubleClick';
 
-interface IUseCell {
-  column: number;
-}
-
-export const useCell = ({ column }: IUseCell) => {
-  // STATE
+export const useCell = (column: number) => {
   const [color, setColor] = useState(Colors.UNSELECTED);
   const { updateColumn, setUpdateColumn, updateColor, setUpdateColor } =
     useCellContext();
