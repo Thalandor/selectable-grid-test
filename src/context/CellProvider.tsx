@@ -12,25 +12,44 @@ export enum Colors {
   HOVERED
 }
 
+export enum Actions {
+  NONE,
+  DOUBLE_CLICK,
+  LONG_PRESS,
+  LONG_PRESS_RELEASED
+}
+
 export interface ICellContext {
   updateColumn: number;
   setUpdateColumn: Dispatch<SetStateAction<number>>;
   updateColor: Colors;
   setUpdateColor: Dispatch<SetStateAction<Colors>>;
+  action: Actions;
+  setAction: Dispatch<SetStateAction<Actions>>;
 }
 export const CellContext = createContext<ICellContext>({
   updateColumn: -1,
   setUpdateColumn: () => {},
   updateColor: Colors.UNSELECTED,
-  setUpdateColor: () => {}
+  setUpdateColor: () => {},
+  action: Actions.NONE,
+  setAction: () => {}
 });
 
 const CellProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [updateColumn, setUpdateColumn] = useState<number>(-1);
   const [updateColor, setUpdateColor] = useState<Colors>(Colors.UNSELECTED);
+  const [action, setAction] = useState<Actions>(Actions.NONE);
   return (
     <CellContext.Provider
-      value={{ updateColumn, setUpdateColumn, updateColor, setUpdateColor }}
+      value={{
+        updateColumn,
+        setUpdateColumn,
+        updateColor,
+        setUpdateColor,
+        action,
+        setAction
+      }}
     >
       {children}
     </CellContext.Provider>
