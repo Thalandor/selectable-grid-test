@@ -14,6 +14,7 @@ const Board = () => {
       <div
         style={{
           display: 'grid',
+          gap: '5px',
           gridTemplateColumns: `repeat(${Number(
             process.env.REACT_APP_WIDTH
           )}, 50px)`
