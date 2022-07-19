@@ -2,6 +2,11 @@
 
 This project was created using CRA (no time to waste configuring webpack/babel and co.)
 
+## Live demo
+
+A live demo can be find on the following url:  
+https://thalandor.github.io/selectable-grid-test/
+
 ## Prerequisites
 
 To start the project an .env file needs to be created. The content needs to be the following:
