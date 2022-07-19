@@ -23,7 +23,8 @@ export const BoardContext = createContext<IBoardContext>({
 
 const BoardProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const elements =
-    Number(process.env.REACT_APP_HEIGHT) * Number(process.env.REACT_APP_WIDTH);
+    Number(process.env.REACT_APP_BOARD_ROWS) *
+    Number(process.env.REACT_APP_BOARD_COLUMNS);
 
   const [data, setData] = useState<ICellData[]>(
     [...Array(elements)].map<ICellData>((_, i) => {

@@ -10,7 +10,9 @@ export const useCell = (index: number) => {
 
   // REF
   const timerRef = useRef<number>();
-  const columnRef = useRef<number>(index % Number(process.env.REACT_APP_WIDTH));
+  const columnRef = useRef<number>(
+    index % Number(process.env.REACT_APP_BOARD_COLUMNS)
+  );
 
   // CONTEXT
   const {

@@ -3,7 +3,8 @@ import Cell from '../cell/Cell';
 
 const Board = () => {
   const elements =
-    Number(process.env.REACT_APP_HEIGHT) * Number(process.env.REACT_APP_WIDTH);
+    Number(process.env.REACT_APP_BOARD_ROWS) *
+    Number(process.env.REACT_APP_BOARD_COLUMNS);
 
   const cells = [...Array(elements)].map((_, i) => (
     <Cell key={`cell_${i}`} index={i} />
@@ -16,7 +17,7 @@ const Board = () => {
           display: 'grid',
           gap: '5px',
           gridTemplateColumns: `repeat(${Number(
-            process.env.REACT_APP_WIDTH
+            process.env.REACT_APP_BOARD_COLUMNS
           )}, 50px)`
         }}
       >

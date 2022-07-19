@@ -1,18 +1,29 @@
 # Frontend test
 
-This project was created using CRA (no time to waste configuring webpack/babel and co)
+This project was created using CRA (no time to waste configuring webpack/babel and co.)
 
-## To start the project
+## Prerequisites
 
-This is a standard CRA project, to start it follow the next steps
+To start the project an .env file needs to be created. The content needs to be the following:
 
-### `yarn`
+| Name                     | Description                      |
+| ------------------------ | -------------------------------- |
+| REACT_APP_GRID_ROWS      | Number of rows of the board.     |
+| REACT_APP_GRID_COLUMNS   | Number of columns of the board.  |
+| REACT_APP_REQUESTBIN_URL | Url for RequestBin Post actions. |
+
+## How to start
+
+This is a standard CRA project, to start it use the next commands
+
+`yarn`
 
 Install the dependencies of the application
 
-### `yarn start`
+`yarn start`
 
 Launch the application on localhost:3000
+
 There is no testing, I didn't have enough time :/
 
 ## General decisions
