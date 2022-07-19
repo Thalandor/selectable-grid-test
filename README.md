@@ -30,4 +30,6 @@ The component Cell is the one in control and it knows what it has to do by itsel
 
 ## Other things
 
-- Double click hook isn't mine, I took it from some page where they were talking about how to implement a double click.
+- 'useDoubleClick' isn't mine, I took it from some page where they were talking about how to implement a double click.
+- 'useCell' custom hook is inside the cell folder component in purpouse, it does not make sense to put it on the general hooks folder as it will be only used there.
+- 'BoardProvider' was created at the end to have a place to mantain the general state to send to requestbin. I didn't want to put the methods inside the CellProvider because conceptually it didn't make any sense (cell provider is for cell thingies, board provider for more general concepts).
