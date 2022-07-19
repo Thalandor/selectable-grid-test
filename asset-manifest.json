@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/selectable-grid-test/static/css/main.2c48c7c0.css",
+    "main.js": "/selectable-grid-test/static/js/main.acc338a4.js",
+    "static/js/787.8c273297.chunk.js": "/selectable-grid-test/static/js/787.8c273297.chunk.js",
+    "index.html": "/selectable-grid-test/index.html",
+    "main.2c48c7c0.css.map": "/selectable-grid-test/static/css/main.2c48c7c0.css.map",
+    "main.acc338a4.js.map": "/selectable-grid-test/static/js/main.acc338a4.js.map",
+    "787.8c273297.chunk.js.map": "/selectable-grid-test/static/js/787.8c273297.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.2c48c7c0.css",
+    "static/js/main.acc338a4.js"
+  ]
+}
