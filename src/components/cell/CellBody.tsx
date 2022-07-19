@@ -1,14 +1,14 @@
-import { memo } from 'react';
+import { memo, MouseEventHandler } from 'react';
 import { Colors } from '../../constants/enums';
 import styles from './CellBody.module.scss';
 
 interface IProps {
   color: Colors;
-  onClickHandler: any;
-  onMouseDownHandler: any;
-  onMouseEnterHandler: any;
-  onMouseUpHandler: any;
-  onMouseLeaveHandler: any;
+  onClickHandler: MouseEventHandler<HTMLDivElement>;
+  onMouseDownHandler: MouseEventHandler<HTMLDivElement>;
+  onMouseEnterHandler: MouseEventHandler<HTMLDivElement>;
+  onMouseUpHandler: MouseEventHandler<HTMLDivElement>;
+  onMouseLeaveHandler: MouseEventHandler<HTMLDivElement>;
 }
 
 const CellBody: React.FC<IProps> = memo(

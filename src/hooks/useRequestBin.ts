@@ -2,7 +2,7 @@ const useRequestBin = () => {
   const headers = new Headers();
   headers.append('Content-Type', 'application/json');
 
-  const sendData = (body: any) =>
+  const sendData = (body: unknown) =>
     process.env.REACT_APP_REQUESTBIN_URL &&
     fetch(process.env.REACT_APP_REQUESTBIN_URL, {
       method: 'POST',
