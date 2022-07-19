@@ -16,14 +16,15 @@ const Cell: React.FC<IProps> = ({ index }) => {
   } = useCell(index);
 
   return (
-    <CellBody
-      color={color}
-      onClickHandler={onClickHandler}
-      onMouseDownHandler={onMouseDownHandler}
-      onMouseEnterHandler={onMouseEnterHandler}
-      onMouseUpHandler={onMouseUpHandler}
-      onMouseLeaveHandler={onMouseLeaveHandler}
-    />
+    <div
+      onClick={onClickHandler}
+      onMouseDown={onMouseDownHandler}
+      onMouseEnter={onMouseEnterHandler}
+      onMouseUp={onMouseUpHandler}
+      onMouseLeave={onMouseLeaveHandler}
+    >
+      <CellBody color={color} />
+    </div>
   );
 };
 
