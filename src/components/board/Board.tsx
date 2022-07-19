@@ -2,18 +2,23 @@ import CellProvider from '../../context/CellProvider';
 import Cell from '../cell/Cell';
 
 const Board = () => {
-  const rows: JSX.Element[] = [];
-  const columns: JSX.Element[] = [];
-
-  for (let column = 0; column < (process.env.REACT_APP_LENGTH || 1); ++column) {
-    columns.push(<Cell column={column} />);
-  }
-  for (let row = 0; row < (process.env.REACT_APP_HEIGHT || 1); ++row) {
-    rows.push(<div style={{ display: 'flex' }}>{columns}</div>);
-  }
+  const elements =
+    Number(process.env.REACT_APP_HEIGHT) * Number(process.env.REACT_APP_WIDTH);
+  const cells = [...Array(elements)].map((_, i) => (
+    <Cell key={`cell_${i}`} index={i} />
+  ));
   return (
     <CellProvider>
-      <div>{rows}</div>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: `repeat(${Number(
+            process.env.REACT_APP_WIDTH
+          )}, 50px)`
+        }}
+      >
+        {cells}
+      </div>
     </CellProvider>
   );
 };
