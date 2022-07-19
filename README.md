@@ -1,46 +1,37 @@
-# Getting Started with Create React App
+# Frontend test
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was created using CRA (no time to waste configuring webpack/babel and co)
 
-## Available Scripts
+## To start the project
 
-In the project directory, you can run:
+This is a standard CRA project, to start it follow the next steps
+
+### `yarn`
+
+Install the dependencies of the application
 
 ### `yarn start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Launch the application on localhost:3000
+There is no testing, I didn't have enough time :/
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## General decisions
 
-### `yarn test`
+Usually on this kind of developments using react there are two options:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Make the components as independent as possible (it's the one I followed)
+- Make the classic dummy child components with a parent who controls everything.
 
-### `yarn build`
+The component Cell is the one in control and it knows what it has to do by itself without depending of its parent, the advantage of this approach is that with the use of context we could separate the Board and the Cell components of each other quite easily and I though I could gain some performance if I could avoid rerendering the whole. However I completely forgot about the requestbin step until the end and that messed a bit the approach. If I had to start again I would go for the other one as both elements are too binded one to the other.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Known bugs
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- I didn't control the mouse release button outside the board, so I'm quite sure it causes a bug.
+- Some times the long press is not working properly, I couldn't catch the repro steps to try to fix it.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Other things
 
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- 'useDoubleClick' isn't mine, I took it from some page where they were talking about how to implement a double click.
+- 'useCell' custom hook is inside the cell folder component in purpouse, it does not make sense to put it on the general hooks folder as it will be only used there.
+- 'BoardProvider' was created at the end to have a place to mantain the general state to send to requestbin. I didn't want to put the methods inside the CellProvider because conceptually it didn't make any sense (cell provider is for cell thingies, board provider for more general concepts).
+- The separation between 'Cell' and 'Cellbody' was basically to gain a bit of performance on rerendering. (on a high number of cells it)
