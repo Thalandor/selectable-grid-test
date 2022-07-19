@@ -5,19 +5,7 @@ import {
   SetStateAction,
   useState
 } from 'react';
-
-export enum Colors {
-  SELECTED,
-  UNSELECTED,
-  HOVERED
-}
-
-export enum Actions {
-  NONE,
-  DOUBLE_CLICK,
-  LONG_PRESS,
-  LONG_PRESS_RELEASED
-}
+import { Actions, Colors } from '../constants/enums';
 
 export interface ICellContext {
   updateColumn: number;

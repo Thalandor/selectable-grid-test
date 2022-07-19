@@ -1,15 +1,13 @@
 import {
   createContext,
-  Dispatch,
   PropsWithChildren,
-  SetStateAction,
   useCallback,
   useEffect,
   useState
 } from 'react';
+import { Colors } from '../constants/enums';
 import useDebounce from '../hooks/useDebounce';
 import useRequestBin from '../hooks/useRequestBin';
-import { Colors } from './CellProvider';
 
 interface ICellData {
   color: Colors;

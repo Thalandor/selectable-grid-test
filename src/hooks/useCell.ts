@@ -1,34 +1,90 @@
-import { useCallback, useEffect, useState } from 'react';
-import { Colors } from '../context/CellProvider';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { Colors, Actions } from '../constants/enums';
+import { useBoardContext } from './useBoardContext';
 import { useCellContext } from './useCellContext';
 import { useDoubleClick } from './useDoubleClick';
 
-export const useCell = (column: number) => {
+export const useCell = (index: number) => {
+  const timerRef = useRef<number>();
+  // STATE
   const [color, setColor] = useState(Colors.UNSELECTED);
-  const { updateColumn, setUpdateColumn, updateColor, setUpdateColor } =
-    useCellContext();
+  const columnRef = useRef<number>(index % Number(process.env.REACT_APP_WIDTH));
 
-  const clickCallback = useCallback(
-    () =>
-      setColor((prevColor: any) =>
-        prevColor === Colors.UNSELECTED ? Colors.SELECTED : Colors.UNSELECTED
-      ),
-    []
-  );
-  const doubleClickCallback = useCallback(() => {
+  // CUSTOM HOOKS
+  const {
+    updateColumn,
+    setUpdateColumn,
+    updateColor,
+    setUpdateColor,
+    action,
+    setAction
+  } = useCellContext();
+
+  const { updateData } = useBoardContext();
+
+  const clickCallback = useCallback(async () => {
+    setColor((prevColor) =>
+      prevColor === Colors.UNSELECTED ? Colors.SELECTED : Colors.UNSELECTED
+    );
+    setAction(Actions.NONE);
+  }, [setAction]);
+
+  const doubleClickCallback = useCallback(async () => {
     setUpdateColor(color);
-    setUpdateColumn(column);
-  }, [color, column, setUpdateColumn, setUpdateColor]);
-  const onClickHandler: any = useDoubleClick({
+    setUpdateColumn(columnRef.current);
+    setAction(Actions.DOUBLE_CLICK);
+  }, [color, setUpdateColumn, setUpdateColor, setAction]);
+
+  const onClickHandler = useDoubleClick({
     onClickHandler: clickCallback,
     onDoubleClickHandler: doubleClickCallback
   });
 
   useEffect(() => {
-    if (column === updateColumn) {
+    if (columnRef.current === updateColumn && action === Actions.DOUBLE_CLICK) {
+      setColor(updateColor);
+    } else if (
+      action === Actions.LONG_PRESS_RELEASED &&
+      color === Colors.HOVERED
+    ) {
       setColor(updateColor);
     }
-  }, [updateColor, updateColumn, column]);
+  }, [updateColor, updateColumn, action, color]);
 
-  return { onClickHandler, color };
+  useEffect(() => {
+    updateData(index, color);
+  }, [updateData, color, index]);
+
+  const onMouseEnterHandler = useCallback(() => {
+    if (action === Actions.LONG_PRESS) {
+      setColor(Colors.HOVERED);
+    }
+  }, [action]);
+
+  const onMouseDownHandler = useCallback(() => {
+    timerRef.current = window.setTimeout(() => {
+      setAction(Actions.LONG_PRESS);
+      setUpdateColor(color);
+    }, 2000);
+  }, [color, setAction, setUpdateColor]);
+
+  const onMouseUpHandler = useCallback(() => {
+    clearTimeout(timerRef.current);
+    if (action === Actions.LONG_PRESS) {
+      setAction(Actions.LONG_PRESS_RELEASED);
+    }
+  }, [action, setAction]);
+
+  const onMouseLeaveHandler = useCallback(() => {
+    clearTimeout(timerRef.current);
+  }, []);
+
+  return {
+    color,
+    onClickHandler,
+    onMouseEnterHandler,
+    onMouseDownHandler,
+    onMouseUpHandler,
+    onMouseLeaveHandler
+  };
 };
